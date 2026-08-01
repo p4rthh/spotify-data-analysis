@@ -1,8 +1,6 @@
 # Use the exact official Python 3.12.3 lightweight runtime
 FROM python:3.12.3-slim
 
-# The rest of your Dockerfile remains exactly the same
-WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -15,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "src/ingest_bronze.py"]
+CMD ["python", "src/ingestion.py"]

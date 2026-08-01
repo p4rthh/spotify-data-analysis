@@ -7,16 +7,11 @@ services:
       dockerfile: Dockerfile
     container_name: spotify_data_pipeline
 
-    # Load local environment variables automatically
     env_file:
       - .env
 
-    # Mount directories to preserve data and OAuth token cache outside Docker
     volumes:
       - ./:/app
-      - ./.cache:/app/.cache
-      - ./data:/app/data
 
-    # Enable interactive terminal input for the initial Spotify OAuth authentication
     stdin_open: true
     tty: true
