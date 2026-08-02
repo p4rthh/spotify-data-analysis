@@ -7,7 +7,9 @@ from spotipy.oauth2 import SpotifyOAuth
 
 load_dotenv()
 
-SCOPES = "user-read-recently-played user-top-read"
+SCOPES = (
+    "user-read-recently-played user-top-read user-library-read playlist-read-private"
+)
 
 
 def fetch_bronze_data():
@@ -55,6 +57,14 @@ def fetch_bronze_data():
         print("Fetching top tracks...")
         top_tracks = sp.current_user_top_tracks(limit=50, time_range="short_term")
         raw_payload["user_data"]["top_tracks_short_term"] = top_tracks
+
+        print("Fetching saved library tracks...")
+        raw_payload["user_data"]["saved_tracks"] = sp.current_user_saved_tracks(
+            limit=50
+        )
+
+        print("Fetching user playlists...")
+        raw_payload["user_data"]["playlists"] = sp.current_user_playlists(limit=50)
 
         timestamp = int(datetime.now().timestamp())
         filename = f"data/bronze/spotify_raw_{timestamp}.json"
